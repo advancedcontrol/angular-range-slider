@@ -1,0 +1,13 @@
+{
+  "name": "angular-range-slider",
+  "main": ["angular-range-slider.js"],
+  "description": "",
+  "dependencies": {
+    "jquery": "2.x",
+    "angular": "1.x",
+    "angular-gesture": "latest",
+    "easy-animate": "latest",
+    "angular-safeapply": "latest"
+  },
+  "devDependencies": {}
+}
