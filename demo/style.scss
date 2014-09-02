@@ -3,3 +3,12 @@
 .co-range-slider {
     @include co-range-slider(#aaa, 10px, 10px, blue, #ddd, 15px);
 }
+
+main {
+    margin: 20px;
+
+    > div {
+        width: 300px;
+        height: 40px;
+    }
+}

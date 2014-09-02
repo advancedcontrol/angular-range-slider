@@ -15,7 +15,7 @@
                         model: '=?'
                     },
 
-                    template:   '<div class="co-range-slider" ng-class="{disabled: options.disabled, readonly: options.readonly, vert: options.vertical, horz: options.horizontal, animate: !dragging}"' + 
+                    template:   '<div class="co-range-slider" ng-class="{disabled: options.disabled, readonly: options.readonly, vert: options.vertical, horz: options.horizontal, animate: !dragging, dragging: dragging}"' + 
                                 'ng-click="clicked($event)" touch-action="pan-y" drag-begin="dragStart($event)" drag-stop="dragEnd()" ng-drag="drag($event)">' +
                                     '<div class="track"></div>' +
                                     '<div class="progress"></div>' +
@@ -37,6 +37,9 @@
                             var progressProperty = 'height';
                         }
 
+                        // ---------------------
+                        // rendering
+                        // ---------------------
                         function calculateValue(event) {
                             if (options.horizontal) {
                                 var pos = event.center.pageX - $element.offset().left;
@@ -62,6 +65,9 @@
                             slide();
                         }
 
+                        // ---------------------
+                        // events
+                        // ---------------------
                         $scope.clicked = function(event) {
                             if (options.disabled || event.target === handle[0]) {
                                 event.stopPropagation();
@@ -90,7 +96,9 @@
                             $scope.dragging = false;
                         };
 
-                        // show the initial value
+                        // ---------------------
+                        // initialisation
+                        // ---------------------
                         $scope.value = $scope.model || 0;
                         $scope.dragging = false;
                         slide();

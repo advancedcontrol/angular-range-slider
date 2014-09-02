@@ -22,10 +22,12 @@
 
     .track {
         background-color: $track-colour;
+        cursor: pointer;
     }
 
     .progress {
         background-color: $progress-colour;
+        cursor: pointer;
     }
 
     .handle {
@@ -41,6 +43,16 @@
         background-color: $handle-colour;
         @include border-radius($handle-margin);
         @include box-shadow(rgba(0,0,0,.5) 0 1px 5px);
+    }
+
+    &.dragging {
+        cursor: -webkit-grabbing;
+        cursor: -moz-grabbing;
+
+        .handle {
+            cursor: -webkit-grabbing;
+            cursor: -moz-grabbing;
+        }
     }
 
     &.horz {
