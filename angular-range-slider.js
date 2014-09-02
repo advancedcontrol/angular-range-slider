@@ -66,8 +66,9 @@
                         }
 
                         function slide() {
-                            progress.css(progressProperty, $scope.value + '%');
-                            handle.css(handleProperty, $scope.value + '%');
+                            var percent = ($scope.value / max) * 100;
+                            progress.css(progressProperty, percent + '%');
+                            handle.css(handleProperty, percent + '%');
                         }
 
                         function handleEvent(event) {
