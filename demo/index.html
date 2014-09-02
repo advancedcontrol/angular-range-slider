@@ -5,9 +5,17 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Angular Range Slider Demo</title>
         <meta name="viewport" content="width=device-width">
-        <link rel="stylesheet" href="demo/style.css">
+        <link rel="stylesheet" href="style.css">
     </head>
     <body ng-app="coRangeSlider">
+        <div style="width: 300px; height: 300px; margin-left: 20px; margin-top: 20px;">
+            <div class="core-range-input horz">
+                <div class="track"></div>
+                <div class="progress" style="width: 60%"></div>
+                <span class="handle"></span>
+                <input type="number" data-type="range">
+            </div>
+        </div>
         <script src="bower_components/angular/angular.js"></script>
         <script src="angular-range-slider.js"></script>
     </body>
