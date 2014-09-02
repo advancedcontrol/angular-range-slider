@@ -1,5 +1,5 @@
 @import "../angular-range-slider.scss";
 
-.core-range-input {
-    @include angular-range-slider(#aaa, 4px, 6px, blue, #ddd, 10px);
+.co-range-slider {
+    @include co-range-slider(#aaa, 4px, 6px, blue, #ddd, 10px);
 }

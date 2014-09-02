@@ -8,15 +8,22 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body ng-app="coRangeSlider">
+    
         <div style="width: 300px; height: 300px; margin-left: 20px; margin-top: 20px;">
-            <div class="core-range-input horz">
-                <div class="track"></div>
-                <div class="progress" style="width: 60%"></div>
-                <span class="handle"></span>
-                <input type="number" data-type="range">
-            </div>
+            <range options="{horizontal: true}"></range>
         </div>
-        <script src="bower_components/angular/angular.js"></script>
-        <script src="angular-range-slider.js"></script>
+
+        <script src="../bower_components/angular/angular.js"></script>
+        <script src="../bower_components/easy-animate/angular-animate.js"></script>
+        <script src="../bower_components/easy-animate/requestAnimationFrame.js"></script>
+        <script src="../bower_components/WeakMap/weakmap.js"></script>
+        <script src="../bower_components/pointerevents-polyfill/pointerevents.dev.js"></script>
+        <script src="../bower_components/angular-gesture/ngGesture/gesture.js"></script>
+        <script src="../bower_components/angular-gesture/ngGesture/directive/ngClick.js"></script>
+        <script src="../bower_components/angular-gesture/ngGesture/directive/ngHold.js"></script>
+        <script src="../bower_components/angular-gesture/ngGesture/directive/ngSwipe.js"></script>
+        <script src="../bower_components/angular-gesture/ngGesture/directive/ngTouch.js"></script>
+        <script src="../bower_components/angular-gesture/ngGesture/directive/ngDrag.js"></script>
+        <script src="../angular-range-slider.js"></script>
     </body>
 </html>

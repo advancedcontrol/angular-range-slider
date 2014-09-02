@@ -1,11 +1,15 @@
 @import "compass";
 
-@mixin angular-range-slider($track-colour, $track-size, $track-radius, $progress-colour, $handle-colour, $handle-size) {
+@mixin co-range-slider($track-colour, $track-size, $track-radius, $progress-colour, $handle-colour, $handle-size) {
     $handle-margin: $handle-size / 2;
     position: relative;
 
     input {
         display: none;
+    }
+
+    &.animate > * {
+        @include single-transition(all, 0.15s, ease-in-out);
     }
 
     .track, .progress {
@@ -22,10 +26,6 @@
 
     .progress {
         background-color: $progress-colour;
-    }
-
-    .core-slider-animate > * {
-        @include single-transition(all, 0.15s, ease-in-out);
     }
 
     .handle {
