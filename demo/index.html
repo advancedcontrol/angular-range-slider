@@ -10,9 +10,9 @@
     <body ng-app="coRangeSlider">
         <main ng-controller="AppCtrl">
             <div>
-                <range options="{horizontal: true}" model="value"></range>
+                <range options="{horizontal: true, step: 4}" model="value"></range>
             </div>
-            <p>Value is: {{value}}</p>
+            <p>Value is: {{value}}, <button ng-click="middle()">Set to 50</button></p>
         </main>
 
         <script src="../bower_components/jquery/dist/jquery.js"></script>

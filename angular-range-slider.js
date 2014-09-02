@@ -32,7 +32,7 @@
                         var min  = options.min  || 0,
                             max  = options.max  || 100,
                             step = options.step || 1,
-                            precision = options.precision || step;
+                            precision = Math.pow(10, options.precision || step);
 
                         if (options.horizontal) {
                             var handleProperty   = 'left';
@@ -41,6 +41,21 @@
                             var handleProperty   = 'bottom';
                             var progressProperty = 'height';
                         }
+
+                        // ---------------------
+                        // binding
+                        // ---------------------
+                        var lastModelValue = 0;
+
+                        $scope.$watch('model', function(val) {
+                            if ($scope.dragging) {
+                                lastModelValue = val;
+                                return;
+                            } else {
+                                $scope.value = val;
+                                slide();
+                            }
+                        });
 
                         // ---------------------
                         // rendering
@@ -59,7 +74,7 @@
                             var stepped = Math.round((percent * max) / step) * step;
 
                             // round the stepped value to a precision level
-                            var rounded = Math.round(stepped, precision);
+                            var rounded = Math.round(stepped * precision) / precision;
 
                             // constraint min..X..max
                             return Math.min(max, Math.max(min, rounded));
@@ -92,8 +107,10 @@
                         $scope.dragStart = function(event) {
                             event.stopPropagation();
                             event.preventDefault();
-                            if (!options.disabled)
+                            if (!options.disabled) {
                                 $scope.dragging = true;
+                                lastModelValue = $scope.value;
+                            }
                         };
 
                         $scope.drag = function(event) {
@@ -105,6 +122,8 @@
 
                         $scope.dragEnd = function() {
                             $scope.dragging = false;
+                            $scope.value = lastModelValue;
+                            slide();
                         };
 
                         // ---------------------
