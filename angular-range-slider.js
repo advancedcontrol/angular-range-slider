@@ -12,25 +12,24 @@
 
                     scope: {
                         options: '=?',
-                        model: '='
+                        model: '=?'
                     },
 
-                    template:   '<div class="co-range-slider" ng-class="{disabled: options.disabled, readonly: options.readonly, vert: options.vertical, horz: options.horizontal, animate: animate}"' + 
-                                'ng-click="clicked($event)" touch-action="pan-y" drag-begin="dragStart($event, true)" drag-stop="dragEnd()" ng-drag="drag($position)">' +
+                    template:   '<div class="co-range-slider" ng-class="{disabled: options.disabled, readonly: options.readonly, vert: options.vertical, horz: options.horizontal, animate: !dragging}"' + 
+                                'ng-click="clicked($event)" touch-action="pan-y" drag-begin="dragStart($event)" drag-stop="dragEnd()" ng-drag="drag($event)">' +
                                     '<div class="track"></div>' +
                                     '<div class="progress"></div>' +
-                                    '<div class="handle" role="slider" touch-action="pan-y" drag-begin="dragStart($event)" drag-stop="dragEnd()" ng-drag="drag($position)"></div>' +
-                                    '<input type="number" data-type="range" ng-class="{hide: !options.visible}" max="{{options.max}}" min="{{options.min}}" step="{{options.step}}" />' +
+                                    '<div class="handle" role="slider" touch-action="pan-y" drag-begin="dragStart($event)" drag-stop="dragEnd()" ng-drag="drag($event)"></div>' +
+                                    '<input ng-model="value" type="number" data-type="range" ng-class="{hide: !options.visible}" max="{{options.max}}" min="{{options.min}}" step="{{options.step}}">' +
                                 '</div>',
 
                     link: function($scope, $element) {
                         var input = $element.find('input'),
                             handle = $element.find('.handle'),
                             progress = $element.find('.progress'),
-                            value = $scope.model,
-                            dragging = false;
+                            options = $scope.options;
 
-                        if ($scope.options.horizontal) {
+                        if (options.horizontal) {
                             var handleProperty   = 'left';
                             var progressProperty = 'width';
                         } else {
@@ -39,7 +38,7 @@
                         }
 
                         function calculateValue(event) {
-                            if ($scope.options.horizontal) {
+                            if (options.horizontal) {
                                 var pos = event.center.pageX - $element.offset().left;
                                 var percent = pos / $element.width();
                             } else {
@@ -48,21 +47,52 @@
                             }
 
                             // TODO: handle min, max, steps etc. here
-                            return Math.round(percent * 100);
+                            var value = Math.round(percent * 100);
+                            return Math.min(100, Math.max(0, value));
                         }
 
                         function slide() {
-                            progress.css(progressProperty, value + '%');
-                            handle.css(handleProperty, value + '%');
-                            input.val(value);
+                            progress.css(progressProperty, $scope.value + '%');
+                            handle.css(handleProperty, $scope.value + '%');
                         }
 
-                        $scope.clicked = function(event) {
-                            value = calculateValue(event);
-                            $scope.model = value;
+                        function handleEvent(event) {
+                            $scope.value = calculateValue(event);
+                            $scope.model = $scope.value;
                             slide();
                         }
 
+                        $scope.clicked = function(event) {
+                            if (options.disabled || event.target === handle[0]) {
+                                event.stopPropagation();
+                                return event.preventDefault();
+                            } else {
+                                handleEvent(event);
+                            }
+                        }
+
+                        $scope.dragStart = function(event) {
+                            event.stopPropagation();
+                            if (options.disabled)
+                                return event.preventDefault();
+                            else
+                                $scope.dragging = true;
+                        };
+
+                        $scope.drag = function(event) {
+                            if (options.disabled)
+                                return;
+                            else
+                                handleEvent(event);
+                        };
+
+                        $scope.dragEnd = function() {
+                            $scope.dragging = false;
+                        };
+
+                        // show the initial value
+                        $scope.value = $scope.model || 0;
+                        $scope.dragging = false;
                         slide();
                     }
                 }
