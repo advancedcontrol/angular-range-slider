@@ -24,10 +24,15 @@
                                 '</div>',
 
                     link: function($scope, $element) {
-                        var input = $element.find('input'),
-                            handle = $element.find('.handle'),
+                        var input    = $element.find('input'),
+                            handle   = $element.find('.handle'),
                             progress = $element.find('.progress'),
-                            options = $scope.options;
+                            options  = $scope.options;
+
+                        var min  = options.min  || 0,
+                            max  = options.max  || 100,
+                            step = options.step || 1,
+                            precision = options.precision || step;
 
                         if (options.horizontal) {
                             var handleProperty   = 'left';
@@ -49,9 +54,15 @@
                                 var percent = 1 - (pos / $element.height());
                             }
 
-                            // TODO: handle min, max, steps etc. here
-                            var value = Math.round(percent * 100);
-                            return Math.min(100, Math.max(0, value));
+                            // expand the value to an number min...max, and clip
+                            // it to a multiple of step
+                            var stepped = Math.round((percent * max) / step) * step;
+
+                            // round the stepped value to a precision level
+                            var rounded = Math.round(stepped, precision);
+
+                            // constraint min..X..max
+                            return Math.min(max, Math.max(min, rounded));
                         }
 
                         function slide() {
@@ -79,9 +90,8 @@
 
                         $scope.dragStart = function(event) {
                             event.stopPropagation();
-                            if (options.disabled)
-                                return event.preventDefault();
-                            else
+                            event.preventDefault();
+                            if (!options.disabled)
                                 $scope.dragging = true;
                         };
 
