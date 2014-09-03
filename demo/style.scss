@@ -1,7 +1,7 @@
 @import "../angular-range-slider.scss";
 
 .co-range-slider {
-    @include co-range-slider(#aaa, 10px, 10px, blue, #ddd, 15px);
+    @include co-range-slider();
 }
 
 main {
@@ -10,5 +10,10 @@ main {
     > div {
         width: 300px;
         height: 40px;
+
+        &.vert {
+            height: 300px;
+            width: 40px;
+        }
     }
 }

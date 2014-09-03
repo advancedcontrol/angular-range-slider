@@ -1,12 +1,15 @@
 @import "compass";
 
-@mixin co-range-slider($track-colour, $track-size, $track-radius, $progress-colour, $handle-colour, $handle-size) {
+@mixin co-range-slider(
+    $track-colour:     rgb(221, 221, 221), 
+    $track-girth:     15px, 
+    $track-radius:    10px, 
+    $progress-colour: rgb(51, 136, 204), 
+    $handle-colour:   rgb(246, 246, 246), 
+    $handle-size:     28px
+) {
     $handle-margin: $handle-size / 2;
     position: relative;
-
-    input {
-        display: none;
-    }
 
     &.animate > * {
         @include single-transition(all, 0.15s, ease-in-out);
@@ -57,7 +60,7 @@
 
     &.horz {
         width: 100%;
-        height: $track-size;
+        height: $track-girth;
 
         .handle {
             top: 50%;
@@ -68,7 +71,7 @@
 
     &.vert {
         height: 100%;
-        width: $track-size;
+        width: $track-girth;
 
         .handle {
             left: 50%;
