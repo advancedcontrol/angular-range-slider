@@ -1,8 +1,6 @@
 @import "../angular-range-slider.scss";
 
-.co-range-slider {
-    @include co-range-slider();
-}
+@include co-range-slider();
 
 main {
     margin: 20px;

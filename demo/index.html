@@ -10,12 +10,12 @@
     <body ng-app="coRangeSlider">
         <main ng-controller="AppCtrl">
             <div>
-                <range model="value"></range>
+                <div co-range model="value"></div>
             </div>
             <p>Value is: {{value}}, <button ng-click="middle()">Set to 50</button></p>
 
             <div class="vert">
-                <range horizontal="false" model="value"></range>
+                <div co-range horizontal="false" model="value"></div>
             </div>
         </main>
 

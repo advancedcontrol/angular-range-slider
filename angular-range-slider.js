@@ -2,13 +2,11 @@
     'use strict';
 
     angular.module('coRangeSlider', ['ngGesture'])
-        .directive('range', [
+        .directive('coRange', [
                 '$timeout',
             function ($timeout) {
                 return {
-                    restrict: 'E',
-                    replace: true,
-
+                    restrict: 'A',
                     scope: {
                         model: '=?',
                         min: '=?',
@@ -19,12 +17,13 @@
                         disabled: '=?'
                     },
 
-                    template:   '<div class="co-range-slider" ng-class="{disabled: disabled, horz: horizontal, vert: !horizontal, animate: !dragging, dragging: dragging}"' + 
-                                'ng-click="clicked($event)" touch-action="pan-y" drag-begin="dragStart($event)" drag-stop="dragEnd()" ng-drag="drag($event)">' +
-                                    '<div class="track"></div>' +
-                                    '<div class="progress"></div>' +
-                                    '<div class="handle" role="slider" touch-action="pan-y" drag-begin="dragStart($event)" drag-stop="dragEnd()" ng-drag="drag($event)"></div>' +
-                                '</div>',
+                    template:   
+                        '<div ng-class="{disabled: disabled, horz: horizontal, vert: !horizontal, animate: !dragging, dragging: dragging}"' + 
+                        'ng-click="clicked($event)" touch-action="pan-y" drag-begin="dragStart($event)" drag-stop="dragEnd()" ng-drag="drag($event)">' +
+                            '<div class="track"></div>' +
+                            '<div class="progress"></div>' +
+                            '<div class="handle" role="slider" touch-action="pan-y" drag-begin="dragStart($event)" drag-stop="dragEnd()" ng-drag="drag($event)"></div>' +
+                        '</div>',
 
                     link: function($scope, $element, attrs) {
                         var input    = $element.find('input'),
@@ -37,6 +36,12 @@
                         $scope.step = $scope.step || 1;
                         $scope.horizontal = $scope.horizontal !== false;
                         $scope.disabled = $scope.disabled === false || attrs.hasOwnProperty('disabled');
+
+                        // Add class to outer element (no replace)
+                        $element.addClass('co-range-slider');
+                        if (!$scope.horizontal) {
+                            $element.addClass('vert');
+                        }
 
                         // Keep precision in sync
                         var precision,
@@ -60,9 +65,11 @@
                             if (horizontal) {
                                 handleProperty   = 'left';
                                 progressProperty = 'width';
+                                $element.removeClass('vert');
                             } else {
                                 handleProperty   = 'bottom';
                                 progressProperty = 'height';
+                                $element.addClass('vert');
                             }
 
                             // Update to the new orientation

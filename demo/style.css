@@ -1,16 +1,20 @@
-/* line 3, style.scss */
-.co-range-slider {
+/* line 14, ../angular-range-slider.scss */
+div.co-range-slider.vert {
+  height: 100%;
+}
+/* line 18, ../angular-range-slider.scss */
+div.co-range-slider > div {
   position: relative;
 }
-/* line 14, ../angular-range-slider.scss */
-.co-range-slider.animate > * {
+/* line 21, ../angular-range-slider.scss */
+div.co-range-slider > div.animate > * {
   -webkit-transition: all 0.15s ease-in-out;
   -moz-transition: all 0.15s ease-in-out;
   -o-transition: all 0.15s ease-in-out;
   transition: all 0.15s ease-in-out;
 }
-/* line 18, ../angular-range-slider.scss */
-.co-range-slider .track, .co-range-slider .progress {
+/* line 25, ../angular-range-slider.scss */
+div.co-range-slider > div .track, div.co-range-slider > div .progress {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   -ms-border-radius: 10px;
@@ -21,18 +25,18 @@
   height: 100%;
   left: 0px;
 }
-/* line 26, ../angular-range-slider.scss */
-.co-range-slider .track {
+/* line 33, ../angular-range-slider.scss */
+div.co-range-slider > div .track {
   background-color: #dddddd;
   cursor: pointer;
 }
-/* line 31, ../angular-range-slider.scss */
-.co-range-slider .progress {
+/* line 38, ../angular-range-slider.scss */
+div.co-range-slider > div .progress {
   background-color: #3388cc;
   cursor: pointer;
 }
-/* line 36, ../angular-range-slider.scss */
-.co-range-slider .handle {
+/* line 43, ../angular-range-slider.scss */
+div.co-range-slider > div .handle {
   position: absolute;
   width: 28px;
   height: 28px;
@@ -50,53 +54,53 @@
   -moz-box-shadow: rgba(0, 0, 0, 0.5) 0 1px 5px;
   box-shadow: rgba(0, 0, 0, 0.5) 0 1px 5px;
 }
-/* line 51, ../angular-range-slider.scss */
-.co-range-slider.dragging {
+/* line 58, ../angular-range-slider.scss */
+div.co-range-slider > div.dragging {
   cursor: -webkit-grabbing;
   cursor: -moz-grabbing;
 }
-/* line 55, ../angular-range-slider.scss */
-.co-range-slider.dragging .handle {
+/* line 62, ../angular-range-slider.scss */
+div.co-range-slider > div.dragging .handle {
   cursor: -webkit-grabbing;
   cursor: -moz-grabbing;
 }
-/* line 61, ../angular-range-slider.scss */
-.co-range-slider.horz {
+/* line 68, ../angular-range-slider.scss */
+div.co-range-slider > div.horz {
   width: 100%;
   height: 15px;
 }
-/* line 65, ../angular-range-slider.scss */
-.co-range-slider.horz .handle {
+/* line 72, ../angular-range-slider.scss */
+div.co-range-slider > div.horz .handle {
   top: 50%;
   left: 0%;
   margin-top: -14px;
 }
-/* line 72, ../angular-range-slider.scss */
-.co-range-slider.vert {
+/* line 79, ../angular-range-slider.scss */
+div.co-range-slider > div.vert {
   height: 100%;
   width: 15px;
 }
-/* line 76, ../angular-range-slider.scss */
-.co-range-slider.vert .handle {
+/* line 83, ../angular-range-slider.scss */
+div.co-range-slider > div.vert .handle {
   left: 50%;
   bottom: 0px;
   margin-bottom: -14px;
 }
-/* line 82, ../angular-range-slider.scss */
-.co-range-slider.vert .progress {
+/* line 89, ../angular-range-slider.scss */
+div.co-range-slider > div.vert .progress {
   bottom: 0px;
 }
 
-/* line 7, style.scss */
+/* line 5, style.scss */
 main {
   margin: 20px;
 }
-/* line 10, style.scss */
+/* line 8, style.scss */
 main > div {
   width: 300px;
   height: 40px;
 }
-/* line 14, style.scss */
+/* line 12, style.scss */
 main > div.vert {
   height: 300px;
   width: 40px;
