@@ -1,7 +1,19 @@
 (function (angular) {
     'use strict';
+    
+    // Use a common namespace
+    var module;
+    try {
+        module = angular.module('coUtils');
+    } catch (e) {
+        module = angular.module('coUtils', ['ngGesture']);
+    }
+    
+    // Ensures this module is loaded.
+    angular.module('ngGesture');
+    
 
-    angular.module('coRangeSlider', ['ngGesture'])
+    module
         .directive('coRange', [
                 '$timeout',
             function ($timeout) {
