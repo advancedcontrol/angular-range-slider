@@ -94,6 +94,15 @@
                         var lastModelValue = 0;
 
                         $scope.$watch('model', function(val) {
+                            // Ensure we are always in a valid range
+                            if (val < $scope.min) {
+                                $scope.model = $scope.min;
+                                val = $scope.model;
+                            } else if (val > $scope.max) {
+                                $scope.model = $scope.max;
+                                val = $scope.model;
+                            }
+
                             if ($scope.dragging) {
                                 lastModelValue = val;
                                 return;
