@@ -42,9 +42,6 @@
             .progress {
                 background-color: $progress-colour;
                 cursor: pointer;
-
-                width: 0;
-                height: 100%;
             }
 
             .handle {
@@ -60,16 +57,6 @@
                 background-color: $handle-colour;
                 @include border-radius($handle-margin);
                 @include box-shadow(rgba(0,0,0,.5) 0 1px 5px);
-            }
-
-            &.animate {
-                .progress {
-                    @include single-transition(width, $animation-time, $animation-type);
-                }
-
-                .handle {
-                    @include single-transition(left, $animation-time, $animation-type);
-                }
             }
 
             &.dragging {
@@ -90,6 +77,21 @@
                     top: 50%;
                     left: 0%;
                     margin-top: -$handle-margin;
+                }
+
+                .progress {
+                    height: 100%;
+                    width: 0;
+                }
+
+                &.animate {
+                    .progress {
+                        @include single-transition(width, $animation-time, $animation-type);
+                    }
+
+                    .handle {
+                        @include single-transition(left, $animation-time, $animation-type);
+                    }
                 }
             }
 
