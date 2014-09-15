@@ -31,10 +31,10 @@
 
                     template:   
                         '<div ng-class="{disabled: disabled, horz: horizontal, vert: !horizontal, animate: !dragging, dragging: dragging}"' + 
-                        'ng-click="clicked($event)" touch-action="pan-y" drag-begin="dragStart($event)" drag-stop="dragEnd()" ng-drag="drag($event)">' +
+                        'ng-click="clicked($event)" touch-action="none" drag-begin="dragStart($event)" drag-stop="dragEnd()" ng-drag="drag($event)">' +
                             '<div class="track"></div>' +
                             '<div class="progress"></div>' +
-                            '<div class="handle" role="slider" touch-action="pan-y" drag-begin="dragStart($event)" drag-stop="dragEnd()" ng-drag="drag($event)"></div>' +
+                            '<div class="handle" role="slider" touch-action="none" drag-begin="dragStart($event)" drag-stop="dragEnd()" ng-drag="drag($event)"></div>' +
                         '</div>',
 
                     link: function($scope, $element, attrs) {
