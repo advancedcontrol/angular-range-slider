@@ -26,7 +26,9 @@
                         step: '=?',
                         precision: '=?',
                         horizontal: '=?',
-                        disabled: '=?'
+                        disabled: '=?',
+                        userCallback: '=?',
+                        dragging: '=?'
                     },
 
                     template:   
@@ -157,6 +159,9 @@
                             $scope.value = calculateValue(event);
                             $scope.model = $scope.value;
                             slide();
+
+                            if ($scope.userCallback)
+                                $scope.userCallback($scope.value);
                         }
 
                         // ---------------------
