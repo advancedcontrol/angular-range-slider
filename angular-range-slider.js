@@ -26,9 +26,7 @@
                         step: '=?',
                         precision: '=?',
                         horizontal: '=?',
-                        disabled: '=?',
-                        userCallback: '=?',
-                        dragging: '=?'
+                        disabled: '=?'
                     },
 
                     template:   
@@ -42,11 +40,13 @@
                     link: function($scope, $element, attrs) {
                         var input    = $element.find('input'),
                             handle   = $element.find('.handle'),
-                            progress = $element.find('.progress');
+                            progress = $element.find('.progress'),
+
+                            // Don't override scope variable (may not be set yet)
+                            minVal = $scope.min || 0,
+                            maxVal = $scope.max || 100;
 
                         // defaults
-                        $scope.min  = $scope.min  || 0;
-                        $scope.max  = $scope.max  || 100;
                         $scope.step = $scope.step || 1;
                         $scope.horizontal = $scope.horizontal !== false;
                         $scope.disabled = $scope.disabled === false || attrs.hasOwnProperty('disabled');
@@ -64,6 +64,13 @@
                             };
                         $scope.$watch('precision', setPrecision);
                         $scope.$watch('step',      setPrecision);
+                        $scope.$watch('min',       function (value) {
+                            minVal = value || 0;
+                        });
+                        $scope.$watch('max',       function (value) {
+                            maxVal = value || 100;
+                        });
+
 
                         // Keep orientation in sync
                         var handleProperty,
@@ -97,11 +104,11 @@
 
                         $scope.$watch('model', function(val) {
                             // Ensure we are always in a valid range
-                            if (val < $scope.min) {
-                                $scope.model = $scope.min;
+                            if (val < minVal) {
+                                $scope.model = minVal;
                                 val = $scope.model;
-                            } else if (val > $scope.max) {
-                                $scope.model = $scope.max;
+                            } else if (val > maxVal) {
+                                $scope.model = maxVal;
                                 val = $scope.model;
                             }
 
@@ -126,19 +133,22 @@
                                 var percent = 1 - (pos / $element.height());
                             }
 
+                            // Normalise the range
+                            var range = maxVal - minVal;
+
                             // expand the value to an number min...max, and clip
                             // it to a multiple of step
-                            var stepped = Math.round((percent * $scope.max) / $scope.step) * $scope.step;
+                            var stepped = Math.round((percent * range) / $scope.step) * $scope.step;
 
                             // round the stepped value to a precision level
                             var rounded = Math.round(stepped * precision) / precision;
 
                             // constraint min..X..max
-                            return Math.min($scope.max, Math.max($scope.min, rounded));
+                            return Math.min(maxVal, Math.max(minVal, (rounded + minVal)));
                         }
 
                         function slide() {
-                            var percent = ($scope.value / $scope.max) * 100;
+                            var percent = (($scope.value - minVal) / (maxVal - minVal)) * 100;
                             progress.css(progressProperty, percent + '%');
                             handle.css(handleProperty, percent + '%');
                         }
@@ -147,9 +157,6 @@
                             $scope.value = calculateValue(event);
                             $scope.model = $scope.value;
                             slide();
-
-                            if ($scope.userCallback)
-                                $scope.userCallback($scope.value);
                         }
 
                         // ---------------------
