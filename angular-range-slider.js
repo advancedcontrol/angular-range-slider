@@ -201,7 +201,7 @@
                         // ---------------------
                         // initialisation
                         // ---------------------
-                        $scope.value = $scope.model || 0;
+                        $scope.value = $scope.model || minVal;
                         $scope.dragging = false;
                         // NOTE:: the watch on scope.horizontal will set the initial slide value
                     }
