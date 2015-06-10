@@ -63,14 +63,28 @@
                         var precision,
                             setPrecision = function () {
                                 precision = Math.pow(10, $scope.precision || $scope.step);
+                            }, 
+                            updateSlider = function () {
+                                $timeout(function () {
+                                    if (minVal < maxVal) {
+                                        setValue($scope.model || minVal);
+                                    }
+                                }, 0, false);
                             };
+
                         $scope.$watch('precision', setPrecision);
                         $scope.$watch('step',      setPrecision);
                         $scope.$watch('min',       function (value) {
                             minVal = value || 0;
+
+                            // Slide if the value has been updated
+                            if (!isNaN(value)) { updateSlider(); }
                         });
                         $scope.$watch('max',       function (value) {
                             maxVal = value || 100;
+
+                            // Slide if the value has been updated
+                            if (!isNaN(value)) { updateSlider(); }
                         });
 
 
@@ -102,25 +116,29 @@
                         // ---------------------
                         // binding
                         // ---------------------
-                        var lastModelValue = 0;
+                        var lastModelValue = 0,
+                            setValue = function (val) {
+                                // Ensure we are always in a valid range
+                                if (val < minVal) {
+                                    val = minVal;
+                                } else if (val > maxVal) {
+                                    val = maxVal;
+                                }
+
+                                if ($scope.dragging) {
+                                    lastModelValue = val;
+                                    return;
+                                } else if (val !== $scope.value) {
+                                    $scope.value = val;
+                                    slide();
+                                }
+                            };
 
                         $scope.$watch('model', function(val) {
-                            // Ensure we are always in a valid range
-                            if (val < minVal) {
-                                $scope.model = minVal;
-                                val = $scope.model;
-                            } else if (val > maxVal) {
-                                $scope.model = maxVal;
-                                val = $scope.model;
-                            }
+                            if (isNaN(val)) { return; }
 
-                            if ($scope.dragging) {
-                                lastModelValue = val;
-                                return;
-                            } else if (val !== $scope.value && $scope.model !== undefined && $scope.model !== null) {
-                                $scope.value = val;
-                                slide();
-                            }
+                            // Ensure we are always in a valid range
+                            setValue(val);
                         });
 
                         // ---------------------
