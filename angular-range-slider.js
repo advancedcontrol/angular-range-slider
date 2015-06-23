@@ -32,7 +32,7 @@
                     },
 
                     template:   
-                        '<div ng-class="{disabled: disabled, horz: horizontal, vert: !horizontal, animate: !dragging, dragging: dragging}"' + 
+                        '<div ng-class="{disabled: !enabled, horz: horizontal, vert: !horizontal, animate: !dragging, dragging: dragging}"' + 
                         'ng-click="clicked($event)" touch-action="none" drag-begin="dragStart($event)" drag-stop="dragEnd()" ng-drag="drag($event)">' +
                             '<div class="track"></div>' +
                             '<div class="progress"></div>' +
@@ -46,12 +46,18 @@
 
                             // Don't override scope variable (may not be set yet)
                             minVal = $scope.min || 0,
-                            maxVal = $scope.max || 100;
+                            maxVal = $scope.max || 100,
+                            
+                            disabled = false;
 
                         // defaults
                         $scope.step = $scope.step || 1;
                         $scope.horizontal = $scope.horizontal !== false;
-                        $scope.disabled = $scope.disabled === false || attrs.hasOwnProperty('disabled');
+                        
+                        $scope.$watch('disabled', function (newVal) {
+                            disabled = newVal === true;
+                            $scope.enabled = !disabled;
+                        });
 
                         // Add class to outer element (no replace)
                         $element.addClass('co-range-slider');
@@ -186,7 +192,7 @@
                         // events
                         // ---------------------
                         $scope.clicked = function(event) {
-                            if ($scope.disabled || event.target === handle[0]) {
+                            if (disabled || event.target === handle[0]) {
                                 event.stopPropagation();
                                 return event.preventDefault();
                             } else {
@@ -197,14 +203,14 @@
                         $scope.dragStart = function(event) {
                             event.stopPropagation();
                             event.preventDefault();
-                            if (!$scope.disabled) {
+                            if (!disabled) {
                                 $scope.dragging = true;
                                 lastModelValue = $scope.value;
                             }
                         };
 
                         $scope.drag = function(event) {
-                            if ($scope.disabled)
+                            if (disabled)
                                 return;
                             else
                                 handleEvent(event);
